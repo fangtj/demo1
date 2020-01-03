@@ -1,8 +1,10 @@
-##项目经验总结
+### 项目经验总结
+
 ### Vue
 #####  1. Vue.set(object, key, value)
   - 改变数组某一项的值、对象增加属性
-#####2. 深度watch与watch立触发回调(watch有两个可选参数)
+
+##### 2. 深度watch与watch立触发回调(watch有两个可选参数)
   - deep：在选项参数中指定 deep: true，可以监听对象中属性的变化。
   - immediate： 在选项参数中指定 immediate: true, 将立即以表达式的当前值触发回调，也就是默认触发一次。
   ```
@@ -23,7 +25,7 @@
   - Vuex
 ##### 4.  函数式组件
   - 函数式组件，即无状态，无法实例化，内部没有任何生命周期处理方法，非常轻量，
-  因而渲染性能高，特别适合用来只依赖外部数据传递而变化的组件
+    因而渲染性能高，特别适合用来只依赖外部数据传递而变化的组件
   ```
  <template functional>
    <div>
@@ -32,10 +34,10 @@
      </p>
    </div>
  </template>
-   ```
+  ```
 ##### 5. 组件复用常见bug
   -  如从/post/a到/post/b页面没有刷新，通常方法是监听$route的变化来初始化数据
-  -  更优雅的解决方法：<router-view :key="$route.fullpath"></router-view>
+  -  更优雅的解决方法：`<router-view :key="$route.fullpath"></router-view>`
 ##### 6.  打包优化提升首屏加载速度(打包后vendor.js太大)
   1. 通过启用压缩，减少打包文件体积
       - 安装compression-webpack-plugin插件， npm install --save-dev compression-webpack-plugin@1.1.2
@@ -56,29 +58,30 @@
         module.exports = {
              externals: { //externals 里的库不会被webpack打包
                 echarts: 'echarts',
-             },   
+             }
         }
       ```
 ##### 7. render函数
    - vue中组件只能有一个根元素，若有多个就会报错  
-   
-    <template>
-      <li
-        v-for="route in routes"
-        :key="route.name"
-      >
-        <router-link :to="route">
-          {{ route.title }}
-        </router-link>
-      </li>
-    </template>
-    
-    
-     ERROR - Component template should contain exactly one root element. 
-        If you are using v-if on multiple elements, use v-else-if 
-        to chain them instead.
+
+```vue
+<template>
+  <li
+    v-for="route in routes"
+    :key="route.name"
+  >
+    <router-link :to="route">
+      {{ route.title }}
+    </router-link>
+  </li>
+</template>   
+​ ERROR - Component template should contain exactly one root element. 
+​        If you are using v-if on multiple elements, use v-else-if 
+​        to chain them instead.
+```
+
    - 解决方法：使用render()函数创建HTML  
-   
+
     functional: true,
     render(h, { props }) {
       return props.routes.map(route =>
@@ -131,7 +134,7 @@
       }
     };
   </script>
-```
+  ```
 ##### 9. Vue对象完整成员
     var vm = new Vue({ 
       // 数据 
@@ -164,13 +167,13 @@
       inheritAttrs: “默认情况下，父作用域的非props属性绑定会应用在子组件的根元素上。当编写嵌套有其它组件或元素的组件时，可以将该属性设置为false关闭这些默认行为”, 
       comments: “设为true时会保留并且渲染模板中的HTML注释” 
     });
-   
+
 ##### 10. object.freeze()
  - 冻结一个对象，对象赋值后调用 obj = Object.freeze(obj), 冻结了obj的值，引用不会被冻结
 ##### 11. 监听组件生命周期
  -  `<Child @hook:mounted="doSomething"/>`  
  当然这里不仅仅是可以监听mounted，其它的生命周期事件，例如：created，updated等都可以
-##### 12. 路由跳转经量使用name而不是path
+##### 12. 路由跳转尽量使用name而不是path
 - 在项目开发过程中，我们前期配置的路由路径后期难免会进行修改，
 如果我们使用的是path，那么我们需要修改所有涉及到的该path的页面。
 而如果我们使用的是name，即使path修改了，还可以用原来的name进行跳转
@@ -230,8 +233,8 @@ export default {
       @select="((item)=>{handleSelect(item, index)})"
       // 写个闭包就可以了，index表示第几个组件
   ></el-autocomplete>
-  ``` 
-### css
+  ```
+### CSS
 - 设置input 文本框的 placeholder 的颜色 `input::-webkit-input-placeholder:{}`
 - 设置body背景色 `html, body{height: 100%}`
 - 1px边框
